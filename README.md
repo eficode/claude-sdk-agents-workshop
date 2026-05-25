@@ -15,9 +15,9 @@ session management. These katas are the same exercises, ported one by one.
 
 | Kata | Original (Strands, Python) | This repo — Python | This repo — TypeScript |
 |------|---------------------------|--------------------|-----------------------|
-| 02 — Agents Intro | ✅ | ✅ ported | ✅ ported |
-| 03 — Custom Tools | ✅ | ✅ ported | ✅ ported |
-| 04 — Local RAG | ✅ | not started | not started |
+| 02 — Agents Intro | [✅](https://github.com/ahokaju/local-ai-agents-workshop/tree/main/kata-02-strands-intro) | [✅ ported](./kata-02-claude-sdk-intro) | [✅ ported](./kata-02-claude-sdk-intro-ts) |
+| 03 — Custom Tools | [✅](https://github.com/ahokaju/local-ai-agents-workshop/tree/main/kata-03-strands-tools) | [✅ ported](./kata-03-claude-sdk-tools) | [✅ ported](./kata-03-claude-sdk-tools-ts) |
+| 04 — Local RAG | [✅](https://github.com/ahokaju/local-ai-agents-workshop/tree/main/kata-04-local-rag) | not started | not started |
 
 ### SDK-only katas (no Strands counterpart)
 
@@ -26,10 +26,9 @@ Strands has no equivalent for. TypeScript only by request.
 
 | Kata | What it shows | Status |
 |------|----------------|--------|
-| **sdk-01 — Agent loop + PreToolUse hook** | The SDK's built-in agent tools (Read/Glob/Grep/Bash/...) used with zero custom tools, observed and gated by a hook | ✅ ported |
-| **sdk-02 — Subagents** | Task tool + `agents: {...}` definitions, per-subagent tool/model scoping, observed via SubagentStop hook | ✅ ported |
-| **sdk-03 — Lifecycle hooks** | UserPromptSubmit + PostToolUse + Stop wired in one scenario — policy injection, output truncation, response-shape enforcement | ✅ ported |
-| ...  | | | |
+| **sdk-01 — Agent loop + PreToolUse hook** | The SDK's built-in agent tools (Read/Glob/Grep/Bash/...) used with zero custom tools, observed and gated by a hook | [✅ ported](./kata-sdk-01-agent-loop-ts) |
+| **sdk-02 — Subagents** | Task tool + `agents: {...}` definitions, per-subagent tool/model scoping, observed via SubagentStop hook | [✅ ported](./kata-sdk-02-subagents-ts) |
+| **sdk-03 — Lifecycle hooks** | UserPromptSubmit + PostToolUse + Stop wired in one scenario — policy injection, output truncation, response-shape enforcement | [✅ ported](./kata-sdk-03-hooks-ts) |
 
 ## Setup
 
