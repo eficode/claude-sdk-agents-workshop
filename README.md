@@ -13,27 +13,37 @@ session management. These katas are the same exercises, ported one by one.
 
 ## Status
 
-| Kata | Original (Strands) | This repo (Claude Agent SDK) |
-|------|--------------------|------------------------------|
-| 02 — Agents Intro | ✅ | ✅ ported |
-| 03 — Custom Tools | ✅ | ⏳ next |
-| 04 — Local RAG | ✅ | not started |
-| ...  | | |
+| Kata | Original (Strands, Python) | This repo — Python | This repo — TypeScript |
+|------|---------------------------|--------------------|-----------------------|
+| 02 — Agents Intro | ✅ | ✅ ported | ✅ ported |
+| 03 — Custom Tools | ✅ | ⏳ next | ⏳ next |
+| 04 — Local RAG | ✅ | not started | not started |
+| ...  | | | |
 
 ## Setup
+
+### Python
 
 ```bash
 # Python 3.10+ required by claude-agent-sdk
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-
-# Anthropic API key
 export ANTHROPIC_API_KEY="sk-ant-..."
-
-# Run a kata
 python kata-02-claude-sdk-intro/solution.py
 ```
+
+### TypeScript
+
+```bash
+cd kata-02-claude-sdk-intro-ts
+npm install
+export ANTHROPIC_API_KEY="sk-ant-..."
+npm start
+```
+
+Both flavors require the Claude Code CLI (`claude` on PATH) — the SDK
+shells out to it.
 
 ## Mapping from Strands
 
