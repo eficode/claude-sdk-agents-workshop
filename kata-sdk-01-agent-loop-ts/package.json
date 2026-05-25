@@ -1,0 +1,20 @@
+{
+  "name": "kata-sdk-01-agent-loop-ts",
+  "version": "1.0.0",
+  "description": "SDK-only kata: built-in agent loop (Read/Glob/Grep/Bash) + canUseTool permission gate",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx solution.ts",
+    "no-gate": "tsx solution.ts --no-gate"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.150",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}

@@ -17,7 +17,18 @@ session management. These katas are the same exercises, ported one by one.
 |------|---------------------------|--------------------|-----------------------|
 | 02 — Agents Intro | ✅ | ✅ ported | ✅ ported |
 | 03 — Custom Tools | ✅ | ✅ ported | ✅ ported |
-| 04 — Local RAG | ✅ | ⏳ next | ⏳ next |
+| 04 — Local RAG | ✅ | not started | not started |
+
+### SDK-only katas (no Strands counterpart)
+
+These exercises show capabilities the Claude Agent SDK ships that
+Strands has no equivalent for. TypeScript only by request.
+
+| Kata | What it shows | Status |
+|------|----------------|--------|
+| **sdk-01 — Agent loop + PreToolUse hook** | The SDK's built-in agent tools (Read/Glob/Grep/Bash/...) used with zero custom tools, observed and gated by a hook | ✅ ported |
+| **sdk-02 — Subagents** | Task tool + `agents: {...}` definitions, multi-agent composition | ⏳ next |
+| **sdk-03 — Lifecycle hooks** | PostToolUse / Stop / UserPromptSubmit beyond the basic PreToolUse case | ⏳ later |
 | ...  | | | |
 
 ## Setup
