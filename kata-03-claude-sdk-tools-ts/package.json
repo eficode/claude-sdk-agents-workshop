@@ -1,0 +1,22 @@
+{
+  "name": "kata-03-claude-sdk-tools-ts",
+  "version": "1.0.0",
+  "description": "Claude Agent SDK (TypeScript) — port of kata-03-strands-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx solution.ts",
+    "starter": "tsx starter.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.150",
+    "@anthropic-ai/sdk": "^0.98.0",
+    "dotenv": "^17.4.2",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}

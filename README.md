@@ -16,8 +16,8 @@ session management. These katas are the same exercises, ported one by one.
 | Kata | Original (Strands, Python) | This repo — Python | This repo — TypeScript |
 |------|---------------------------|--------------------|-----------------------|
 | 02 — Agents Intro | ✅ | ✅ ported | ✅ ported |
-| 03 — Custom Tools | ✅ | ⏳ next | ⏳ next |
-| 04 — Local RAG | ✅ | not started | not started |
+| 03 — Custom Tools | ✅ | ✅ ported | ✅ ported |
+| 04 — Local RAG | ✅ | ⏳ next | ⏳ next |
 | ...  | | | |
 
 ## Setup
