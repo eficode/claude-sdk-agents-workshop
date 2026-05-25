@@ -1,0 +1,2 @@
+# Override the root *.log rule so this kata's fixture log gets tracked.
+!access.log
