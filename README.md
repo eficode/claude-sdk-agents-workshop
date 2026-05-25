@@ -27,8 +27,8 @@ Strands has no equivalent for. TypeScript only by request.
 | Kata | What it shows | Status |
 |------|----------------|--------|
 | **sdk-01 — Agent loop + PreToolUse hook** | The SDK's built-in agent tools (Read/Glob/Grep/Bash/...) used with zero custom tools, observed and gated by a hook | ✅ ported |
-| **sdk-02 — Subagents** | Task tool + `agents: {...}` definitions, multi-agent composition | ⏳ next |
-| **sdk-03 — Lifecycle hooks** | PostToolUse / Stop / UserPromptSubmit beyond the basic PreToolUse case | ⏳ later |
+| **sdk-02 — Subagents** | Task tool + `agents: {...}` definitions, per-subagent tool/model scoping, observed via SubagentStop hook | ✅ ported |
+| **sdk-03 — Lifecycle hooks** | PostToolUse / Stop / UserPromptSubmit beyond the basic PreToolUse case | ⏳ next |
 | ...  | | | |
 
 ## Setup
