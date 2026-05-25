@@ -1,6 +1,6 @@
 # Kata 03: Claude Agent SDK with Custom Tools (Python)
 
-Port of [`kata-03-strands-tools`](../../local-ai-agents-workshop/kata-03-strands-tools).
+Port of [`kata-03-strands-tools`](https://github.com/ahokaju/local-ai-agents-workshop/tree/main/kata-03-strands-tools).
 
 ## Objective
 

@@ -1,6 +1,6 @@
 # Kata 02: Introduction to the Claude Agent SDK
 
-A port of [`kata-02-strands-intro`](../../local-ai-agents-workshop/kata-02-strands-intro)
+A port of [`kata-02-strands-intro`](https://github.com/ahokaju/local-ai-agents-workshop/tree/main/kata-02-strands-intro)
 using the **Claude Agent SDK** instead of Strands.
 
 ## Objective
@@ -161,4 +161,4 @@ fill in the TODOs.
 ## Resources
 
 - [Claude Agent SDK — Python](https://docs.claude.com/en/api/agent-sdk/python)
-- [Original Strands kata](../../local-ai-agents-workshop/kata-02-strands-intro/README.md)
+- [Original Strands kata](https://github.com/ahokaju/local-ai-agents-workshop/blob/main/kata-02-strands-intro/README.md)

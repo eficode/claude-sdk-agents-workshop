@@ -1,6 +1,6 @@
 # Claude Agent SDK Katas
 
-A port of the [local-ai-agents-workshop](../local-ai-agents-workshop) katas from the
+A port of the [local-ai-agents-workshop](https://github.com/ahokaju/local-ai-agents-workshop) katas from the
 **Strands Agents SDK** to the **Claude Agent SDK** — Anthropic's own SDK for
 building Claude Code-style agents in Python.
 
