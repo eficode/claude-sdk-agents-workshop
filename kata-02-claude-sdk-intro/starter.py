@@ -4,20 +4,19 @@ Kata 02: Claude Agent SDK Introduction — Starter
 Fill in the TODOs. Compare your result with solution.py when stuck.
 
 Prerequisites:
-    pip install claude-agent-sdk anthropic python-dotenv
-    export ANTHROPIC_API_KEY="sk-ant-..."
+    pip install claude-agent-sdk python-dotenv
+    export ANTHROPIC_API_KEY="sk-ant-..."   # or use Claude Code subscription auth
 """
 
 import asyncio
-import time
 
-from anthropic import Anthropic
 from dotenv import load_dotenv
 
 from claude_agent_sdk import (
     AssistantMessage,
     ClaudeAgentOptions,
     ClaudeSDKClient,
+    ResultMessage,
     TextBlock,
     query,
 )
@@ -75,10 +74,12 @@ async def demo_multi_turn():
 # -----------------------------------------------------------------------------
 # TODO 4 (optional): model comparison
 # -----------------------------------------------------------------------------
-# Use the raw Anthropic client (Anthropic().messages.create) to compare
-# DEFAULT_MODEL vs COMPARISON_MODEL on the same prompt and print timings.
-# Token usage is easier to read off the raw API than from SDK ResultMessage.
-def compare_models(prompt: str) -> dict:
+# Run the same prompt through DEFAULT_MODEL and COMPARISON_MODEL via query()
+# and read timing/tokens/cost off the ResultMessage at the end of each stream.
+# Hint: build ClaudeAgentOptions(model=model_id, allowed_tools=[]), then
+# `async for msg in query(...)` — capture AssistantMessage TextBlocks AND the
+# trailing ResultMessage (msg.duration_ms / msg.usage / msg.total_cost_usd).
+async def compare_models(prompt: str) -> dict:
     raise NotImplementedError("TODO 4 (optional): model comparison")
 
 
@@ -86,7 +87,7 @@ async def main():
     await demo_basic_query()
     await demo_system_prompt()
     await demo_multi_turn()
-    # results = compare_models("Explain what causes thunder in one sentence.")
+    # results = await compare_models("Explain what causes thunder in one sentence.")
     # for r in results.values():
     #     print(r["name"], r["time"], r["response"])
 

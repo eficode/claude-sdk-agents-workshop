@@ -7,13 +7,14 @@ Same demos, same learning goals, idiomatic TS.
 
 ```bash
 npm install
-export ANTHROPIC_API_KEY="sk-ant-..."
+export ANTHROPIC_API_KEY="sk-ant-..."   # or use a logged-in `claude` CLI
 npm start          # runs solution.ts
 npm run starter    # runs starter.ts (TODOs)
 ```
 
-Requires Node 18+ and Claude Code CLI installed (`claude` on PATH — the
-SDK shells out to it).
+Requires Node 18+ and the Claude Code CLI on PATH (`claude` — the SDK
+shells out to it). The kata authenticates either via `ANTHROPIC_API_KEY`
+or whatever credentials the `claude` CLI is already logged in with.
 
 ## What's different from the Python version
 

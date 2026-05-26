@@ -10,15 +10,14 @@
  */
 
 import "dotenv/config";
-import Anthropic from "@anthropic-ai/sdk";
 import { query, type Options, type SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 
 const DEFAULT_MODEL = "claude-haiku-4-5";
 const COMPARISON_MODEL = "claude-sonnet-4-5";
 
-const MODEL_PRICING: Record<string, { input: number; output: number; name: string }> = {
-  "claude-sonnet-4-5": { input: 3.0, output: 15.0, name: "Sonnet 4.5" },
-  "claude-haiku-4-5": { input: 0.8, output: 4.0, name: "Haiku 4.5" },
+const MODEL_NAMES: Record<string, string> = {
+  "claude-sonnet-4-5": "Sonnet 4.5",
+  "claude-haiku-4-5": "Haiku 4.5",
 };
 
 const Colors = {
@@ -156,38 +155,31 @@ async function demoWeatherChatbot() {
 }
 
 // ===========================================================================
-// Demo 5 — Haiku vs Sonnet via the raw Anthropic SDK
+// Demo 5 — Haiku vs Sonnet via claude-agent-sdk
 // ===========================================================================
-// Same rationale as the Python version: token counts from the raw API are
-// apples-to-apples, the SDK's ResultMessage includes Claude Code framing.
+// Run the same prompt under each model and read timing/tokens/cost off the
+// SDK's ResultMessage — no raw Anthropic client needed, so this works under
+// either ANTHROPIC_API_KEY or Claude Code subscription auth.
 async function compareModels(prompt: string) {
-  const client = new Anthropic();
   const results: Record<
     string,
     { name: string; response: string; time: number; inputTokens: number; outputTokens: number; cost: number }
   > = {};
 
   for (const modelId of [DEFAULT_MODEL, COMPARISON_MODEL]) {
-    const start = Date.now();
-    const response = await client.messages.create({
-      model: modelId,
-      max_tokens: 256,
-      messages: [{ role: "user", content: prompt }],
-    });
-    const elapsed = (Date.now() - start) / 1000;
-    const pricing = MODEL_PRICING[modelId];
-    const cost =
-      (response.usage.input_tokens * pricing.input) / 1_000_000 +
-      (response.usage.output_tokens * pricing.output) / 1_000_000;
-    const firstBlock = response.content[0];
-    const text = firstBlock.type === "text" ? firstBlock.text : "";
+    const { text, result } = await collect(
+      query({ prompt, options: baseOptions({ model: modelId }) })
+    );
+    if (!result || result.subtype !== "success") {
+      throw new Error(`No success result for ${modelId}`);
+    }
     results[modelId] = {
-      name: pricing.name,
+      name: MODEL_NAMES[modelId] ?? modelId,
       response: text,
-      time: elapsed,
-      inputTokens: response.usage.input_tokens,
-      outputTokens: response.usage.output_tokens,
-      cost,
+      time: result.duration_ms / 1000,
+      inputTokens: result.usage.input_tokens,
+      outputTokens: result.usage.output_tokens,
+      cost: result.total_cost_usd,
     };
   }
   return results;
@@ -232,7 +224,7 @@ async function demoModelComparison() {
   console.log("-".repeat(40));
   const prompt = "Explain what causes thunder in one sentence.";
   console.log(Colors.prompt(`Prompt: '${prompt}'`));
-  console.log(Colors.stats("\nRunning same prompt on Haiku and Sonnet via raw Anthropic API..."));
+  console.log(Colors.stats("\nRunning same prompt on Haiku and Sonnet via claude-agent-sdk..."));
 
   const results = await compareModels(prompt);
   for (const data of Object.values(results)) {
