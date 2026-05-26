@@ -22,7 +22,7 @@ difference between one-shot `query()` calls and persistent
 ## Prerequisites
 
 - Python 3.10+
-- `ANTHROPIC_API_KEY` environment variable set
+- `ANTHROPIC_API_KEY` env var **or** a logged-in `claude` CLI (subscription auth)
 - `pip install -r ../requirements.txt`
 
 ## Time estimate
@@ -154,7 +154,7 @@ fill in the TODOs.
 |-----------------|-----------|
 | `agent("...")` returns a string | `query()` / `receive_response()` yield messages — extract text from blocks |
 | Sync API | Async (`anyio.run` / `asyncio.run`) |
-| Token usage from `response.usage` | Token usage comes from `ResultMessage` at end of stream (different shape) |
+| Token usage from `response.usage` | Token usage / cost / duration come from `ResultMessage` at the end of the stream |
 | Strands has no built-in agentic tools | SDK ships Read/Write/Bash/etc. — must set `allowed_tools=[]` to opt out |
 | `Agent` instance is the unit of statefulness | `ClaudeSDKClient` is the session; `query()` is stateless |
 

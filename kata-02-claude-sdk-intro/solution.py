@@ -4,14 +4,12 @@ Kata 02: Claude Agent SDK Introduction — Solution
 Port of kata-02-strands-intro using the Claude Agent SDK.
 
 Prerequisites:
-    pip install claude-agent-sdk anthropic python-dotenv
-    export ANTHROPIC_API_KEY="sk-ant-..."
+    pip install claude-agent-sdk python-dotenv
+    export ANTHROPIC_API_KEY="sk-ant-..."   # or use Claude Code subscription auth
 """
 
 import asyncio
-import time
 
-from anthropic import Anthropic
 from dotenv import load_dotenv
 
 from claude_agent_sdk import (
@@ -28,9 +26,9 @@ load_dotenv()
 DEFAULT_MODEL = "claude-haiku-4-5"
 COMPARISON_MODEL = "claude-sonnet-4-5"
 
-MODEL_PRICING = {
-    "claude-sonnet-4-5": {"input": 3.00, "output": 15.00, "name": "Sonnet 4.5"},
-    "claude-haiku-4-5": {"input": 0.80, "output": 4.00, "name": "Haiku 4.5"},
+MODEL_NAMES = {
+    "claude-sonnet-4-5": "Sonnet 4.5",
+    "claude-haiku-4-5": "Haiku 4.5",
 }
 
 
@@ -172,34 +170,32 @@ async def demo_weather_chatbot():
 # ==============================================================================
 # Demo 5 — model comparison (Haiku vs Sonnet)
 # ==============================================================================
-# Strands' compare_models used the raw Anthropic client because token usage was
-# easier to get there. We keep the same approach: SDK for the agent katas, raw
-# Anthropic API for accurate token/cost accounting. This makes the comparison
-# apples-to-apples and shows how the two layers coexist.
+# Run each model through claude-agent-sdk and read timing/tokens/cost off the
+# ResultMessage. No raw Anthropic client needed — this works under either
+# ANTHROPIC_API_KEY or Claude Code subscription auth.
 
-def compare_models(prompt: str) -> dict:
-    client = Anthropic()
+async def compare_models(prompt: str) -> dict:
     results = {}
     for model_id in [DEFAULT_MODEL, COMPARISON_MODEL]:
-        start = time.time()
-        response = client.messages.create(
-            model=model_id,
-            max_tokens=256,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        elapsed = time.time() - start
-        pricing = MODEL_PRICING[model_id]
-        cost = (
-            response.usage.input_tokens * pricing["input"] / 1_000_000
-            + response.usage.output_tokens * pricing["output"] / 1_000_000
-        )
+        options = basic_options(model=model_id)
+        text_parts: list[str] = []
+        result: ResultMessage | None = None
+        async for msg in query(prompt=prompt, options=options):
+            if isinstance(msg, AssistantMessage):
+                for block in msg.content:
+                    if isinstance(block, TextBlock):
+                        text_parts.append(block.text)
+            elif isinstance(msg, ResultMessage):
+                result = msg
+        if result is None or result.usage is None:
+            raise RuntimeError(f"No result message for {model_id}")
         results[model_id] = {
-            "name": pricing["name"],
-            "response": response.content[0].text,
-            "time": elapsed,
-            "input_tokens": response.usage.input_tokens,
-            "output_tokens": response.usage.output_tokens,
-            "cost": cost,
+            "name": MODEL_NAMES[model_id],
+            "response": "".join(text_parts),
+            "time": result.duration_ms / 1000,
+            "input_tokens": result.usage.get("input_tokens", 0),
+            "output_tokens": result.usage.get("output_tokens", 0),
+            "cost": result.total_cost_usd or 0.0,
         }
     return results
 
@@ -232,9 +228,9 @@ async def demo_model_comparison():
     print("-" * 40)
     prompt = "Explain what causes thunder in one sentence."
     print(Colors.prompt(f"Prompt: '{prompt}'"))
-    print(Colors.stats("\nRunning same prompt on Haiku and Sonnet via raw Anthropic API..."))
+    print(Colors.stats("\nRunning same prompt on Haiku and Sonnet via claude-agent-sdk..."))
 
-    results = compare_models(prompt)
+    results = await compare_models(prompt)
     for data in results.values():
         print(Colors.stats(f"\n{data['name']} ({data['time']:.2f}s):"))
         print(Colors.response(f"  {data['response']}"))
